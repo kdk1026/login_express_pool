@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div>
+        <div>email : <input type="text" name="email" /></div>
+        <div>passwd : <input type="password" name="password" /></div>
+
+        <button id="btnLogin">Login</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        $(function() {
+            $('#btnLogin').click(function() {
+                var data = {
+                    'email' : $('input[name="email"]').val(),
+                    'password' : $('input[name="password"]').val()
+                };
+
+                if ( !fnValidation(data) ) {
+                    return false;
+                }
+
+                fnSendAjax('/login', data);
+            });
+        });
+
+        function fnValidation(data) {
+            if ( !data.email.trim() ) {
+                alert('이메일을 입력해 주세요.');
+                return false;
+            }
+
+            if ( !data.password.trim() ) {
+                alert('비밀번호를 입력해 주세요.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function fnSendAjax(url, data) {
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: data,
+                success: function(result) {
+                    if (result.success) {
+                        location.href = '/main';
+                    } else {
+                        var msg = '<span>가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</span>';
+                        msg += '<br/>';
+                        msg += '<a href="/signup">회원가입</a>';
+                        $('#result').html(msg);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#result').html( jqXHR.responseText );
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>

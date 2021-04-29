@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div>
+        <div>email : <input type="text" name="email" /></div>
+        <div>name : <input type="text" name="name" /></div>
+        <div>password : <input type="password" name="password" /></div>
+        <div>password confirm : <input type="password" name="password_confirm" /></div>
+
+        <button id="btnSignUp">SignUp</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        $(function() {
+            $('#btnSignUp').click(function() {
+                var data = {
+                    'email' : $('input[name="email"]').val(),
+                    'name' : $('input[name="name"]').val(),
+                    'password' : $('input[name="password"]').val()
+                };
+
+
+                if ( !fnValidation(data) ) {
+                    return false;
+                }
+
+                if ( data.password === $('input[name="password_confirm"]').val() ) {
+                    fnSendAjax('/signup', data);
+                } else {
+                    alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                }
+            });
+        });
+
+        function fnValidation(data) {
+            if ( !data.email.trim() ) {
+                alert('이메일을 입력해 주세요.');
+                return false;
+            }
+
+            if ( !data.name.trim() ) {
+                alert('이름을 입력해 주세요.');
+                return false;
+            }
+
+            if ( !data.password.trim() ) {
+                alert('비밀번호를 입력해 주세요.');
+                return false;
+            }
+
+            if ( !$('input[name="password_confirm"]').val().trim() ) {
+                alert('비밀번호 확인을 입력해 주세요.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function fnSendAjax(url, data) {
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: data,
+                success: function(result) {
+                    if (result.success) {
+                        location.href = '/main';
+                    } else {
+                        var msg = '<span>이미 가입된 아이디입니다.</span>';
+                        msg += '<br/>';
+                        msg += '<a href="/login">로그인</a>';
+                        $('#result').html(msg);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#result').html( jqXHR.responseText );
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

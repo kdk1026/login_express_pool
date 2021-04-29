@@ -1,0 +1,37 @@
+--------------------------------
+1. MySQL 설치
+--------------------------------
+	XAMPP 권장
+	
+	https://www.apachefriends.org/download.html
+	
+	XAMPP Control Panel 실행 후, MySQL Start	
+	Shell 실행
+	
+--------------------------------
+2. DB 생성
+--------------------------------
+	$ mysql -u root -p
+	$ create database temp
+	
+	SQL 클라이언트 툴을 통해 접속
+	
+	host: "localhost",
+	user: "root",
+	password: "",
+	database: "temp"
+	
+--------------------------------
+3. 테이블 생성
+--------------------------------
+	CREATE TABLE `user` (
+	  `uid` int(11) NOT NULL AUTO_INCREMENT,
+	  `email` varchar(255) DEFAULT NULL,
+	  `name` varchar(100) DEFAULT NULL,
+	  `pw` varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (`uid`)
+	);
+	
+	insert into user (email, name, pw) values ('crong@naver.com', 'crong', 'asdf');
+	
+	select * from user;
