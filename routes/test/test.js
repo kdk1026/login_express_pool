@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 
     console.log( 'same : ', isPasswordCompare );
 
-    res.send( {'encryptPassword' : encryptPassword, 'same' : isSame} );
+    res.send( {'encryptPassword' : encryptPassword, 'same' : isPasswordCompare} );
 });
 
 module.exports = router;
