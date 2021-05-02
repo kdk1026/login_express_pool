@@ -14,9 +14,11 @@ router.get('/main', function(req, res) {
 var login = require('./login');
 var logout = require('./logout');
 var signup = require('./signup');
+var test = require('./test/test');
 
 router.use('/login', login);
 router.use('/logout', logout);
 router.use('/signup', signup);
+router.use('/test', test);
 
 module.exports = router;

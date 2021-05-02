@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var getConnection = require('../utill/mysql_pool.js');
+const bcrypt = require('bcrypt');
 
 router.get('/', function(req, res) {
     if ( !req.session.user ) {
@@ -13,10 +14,13 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
+    const saltRounds = 10;
+    const encryptPassword = bcrypt.hashSync(req.body.password, saltRounds);
+
     var intputData = {
         email : req.body.email,
         name : req.body.name,
-        pw : req.body.password
+        pw : encryptPassword
     };
 
     getConnection((conn) => {

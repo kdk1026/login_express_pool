@@ -32,6 +32,7 @@
 	  PRIMARY KEY (`uid`)
 	);
 	
-	insert into user (email, name, pw) values ('crong@naver.com', 'crong', 'asdf');
+	# 평문 비밀번호 = asdf
+	insert into user (email, name, pw) values ('crong@naver.com', 'crong', '$2b$10$cA9RaJzdvjEeDO9ri6ddZu3yxpJJRcDM3PbLu423/0/fqlKixmLPy');
 	
 	select * from user;
